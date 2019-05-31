@@ -4,7 +4,7 @@ project(cirkit_waypoint_navigator)
 find_package(catkin REQUIRED COMPONENTS
   actionlib
   geometry_msgs
-  jsk_recognition_msgs
+ #jsk_recognition_msgs
   laser_geometry
   message_generation
   move_base_msgs

@@ -78,8 +78,8 @@ public:
         filename,
         ros::package::getPath("cirkit_waypoint_navigator") + "/waypoints/garden_waypoints.csv"); // FIXME: Don't find!
 
-    n.param("dist_thres_to_target_object", dist_thres_to_target_object_, 1.8);
-    n.param("limit_of_approach_to_target", limit_of_approach_to_target_, 5);
+    n.param("dist_thres_to_target_object", dist_thres_to_target_object_, 0.0);
+    n.param("limit_of_approach_to_target", limit_of_approach_to_target_, 0);
     n.param("start_waypoint", target_waypoint_index_, 0);
     
     ROS_INFO("[Waypoints file name] : %s", filename.c_str());
@@ -352,8 +352,9 @@ public:
               geometry_msgs::Pose robot_pose = this->getRobotCurrentPosition();
               geometry_msgs::Pose target_pose(target_objects_.boxes[i].pose);
               double distance_to_target = this->calculateDistance(robot_pose, target_pose);
-              if (distance_to_target < 5.0) {
+              if (distance_to_target < 1.0) {
                 ROS_INFO_STREAM("Found new target object.");
+		ROS_INFO("Found new target object.");
                 this->setNextGoal(target_objects_.boxes[i], dist_thres_to_target_object_); // 探索対象を次のゴールに設定
                 ROS_INFO_STREAM("Set new target_objects as goal.");
                 robot_behavior_state_ = RobotBehaviors::DETECT_TARGET_NAV;
